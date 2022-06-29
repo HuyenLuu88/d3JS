@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="all.min.css" />
+<style>
+    html,
+    body {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    .ttip{
+        background-color: #FFF;
+        width: 100%;
+        height: 100%;
+        border: solid;
+    }
+
+
+    .detailChart {
+        margin-top: 20px !important;
+    }
+
+    .mono {
+        font-size: 12px !important;
+    }
+
+    /* .tooltip{
+    width: 25%;
+} */
+
+    .cajas1 {
+        width: 50%;
+        height: 50%;
+        float: left;        
+    }
+
+    #container {
+        position: relative;
+        padding: 0;
+        height: -webkit-fill-available;
+        width: 100%;
+        background: #FFF;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* div {
+    position:absolute;    
+    margin:0;
+    padding:0px;
+} */
+    div:nth-child(1) {
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+
+    /* #my_dataviz {
+    
+    top:0;
+    right:0;
+    z-index: 1;
+}
+#my_dataviz2 {
+    border-color:yellow;
+    bottom:0;
+    left:0;
+    z-index: 1;
+}
+#my_dataviz3 {
+    border-color:pink;
+    bottom:0;
+    right:0;
+    z-index: 1;
+}
+#my_dataviz4 {
+    border-color:pink;
+    top:0;
+    left:0;
+    z-index: 1;
+} */
+
+    #fondo {
+        position: absolute;
+        left: 50.2%;
+        top: 49.5%;
+        transform: translate(-48%, -50%);
+        z-index: -1;
+        max-height: 51.5%;
+    }
+
+    #buttons {
+        position: absolute;
+        left: 48.2%;
+        top: 19%;
+        transform: translate(-10%, -50%);
+        z-index: 3;
+        max-height: 40%;
+    }    
+
+    #buttons button{
+        width: 66px;
+        height: 40px;
+        margin-bottom: 5px;
+        font-size: 34px;
+        color: #4170C3;
+        display: block;
+    }
+
+    #buttons select{
+        width: 66px;
+        height: 20px;
+        margin-bottom: 5px;
+        font-size: 16px;
+        color: #4170C3;
+        display: block;
+        text-align-last:right;    
+        direction: rtl;
+    }
+
+    button>img {
+        width: 95%;
+        height: 95%;
+    }
+
+
+    .value {
+        font-size: 11px;
+    }
+
+    .chart-span {
+        fill: #333;
+        opacity: 0.5;
+    }
+
+    .chart {
+        /* top: 0; 
+    right: 0;  */
+        z-index: 999;
+    }
+
+    .chartGroup {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+    }
+
+    .detailChart {
+        margin-top: 40px;
+        /* align-items: center; */
+    }
+
+    div.tooltip {
+        position: absolute;
+        text-align: center;
+        width: 80px;
+        padding: 3px;
+        display:none;
+        border-radius: 8px;
+        background: #444;
+        color: #fff;
+        font-size: 12px;
+        margin-top: -30px;
+    }
+
+    .tooltip:before {
+        border: solid;
+        border-color: #444 transparent;
+        border-width: 8px 4px 0 4px;
+        content: "";
+        left: -10%;
+        bottom: 50px;
+        position: absolute;
+    }
+
+    .crosshatch { background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc4JyBoZWlnaHQ9JzgnPgogIDxyZWN0IHdpZHRoPSc4JyBoZWlnaHQ9JzgnIGZpbGw9JyNmZmYnLz4KICA8cGF0aCBkPSdNMCAwTDggOFpNOCAwTDAgOFonIHN0cm9rZS13aWR0aD0nMC41JyBzdHJva2U9JyNhYWEnLz4KPC9zdmc+Cg=="); 
+                  background-repeat: repeat; }
+    .lightstripe { background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc1JyBoZWlnaHQ9JzUnPgogIDxyZWN0IHdpZHRoPSc1JyBoZWlnaHQ9JzUnIGZpbGw9J3doaXRlJy8+CiAgPHBhdGggZD0nTTAgNUw1IDBaTTYgNEw0IDZaTS0xIDFMMSAtMVonIHN0cm9rZT0nIzg4OCcgc3Ryb2tlLXdpZHRoPScxJy8+Cjwvc3ZnPg=="); 
+                  background-repeat: repeat; }
+    .verticalstripe { background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc2JyBoZWlnaHQ9JzQ5Jz4KICA8cmVjdCB3aWR0aD0nMycgaGVpZ2h0PSc1MCcgZmlsbD0nI2ZmZicvPgogIDxyZWN0IHg9JzMnIHdpZHRoPScxJyBoZWlnaHQ9JzUwJyBmaWxsPScjY2NjJy8+Cjwvc3ZnPgo="); 
+                  background-repeat: repeat; }
+    .dots-8 { background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMCcgaGVpZ2h0PScxMCc+CiAgPHJlY3Qgd2lkdGg9JzEwJyBoZWlnaHQ9JzEwJyBmaWxsPSd3aGl0ZScgLz4KICA8cmVjdCB4PScwJyB5PScwJyB3aWR0aD0nOCcgaGVpZ2h0PSc4JyBmaWxsPSdibGFjaycgLz4KPC9zdmc+"); 
+                  background-repeat: repeat; }                  
+
+    .click-here {
+        position: absolute;
+        top: 30%;
+        /* width: 200px; */
+        opacity: 0;
+        display:block;
+        font-size: 2em;
+    }
+    .click-here.left{
+        left: 80px;
+    }
+    .click-here.right{
+        right: 80px;
+    }
+    .rect1{                             /*un solo evento*/
+        stroke:none;
+        /*stroke-dasharray: 5;*/
+        opacity: 0.25;       
+        
+    }
+    .rect2{                          /*dos eventos*/
+/*        stroke-dasharray: 4 2 3 4;*/
+        stroke:none;
+        opacity: 0.5;
+    }
+    .rect3{           /*tres eventos*/
+/*        stroke-dasharray: 4 1 2;*/
+        stroke: none;
+        opacity: 0.75;
+        
+    }
+    .rect4{        
+        opacity: 1;
+        stroke: none;              /*cuatro eventos*/
+    }
+    .click-here, .tooltip, #legend{
+        font-family: monospace;
+    }
+    #icons{        
+        position: absolute;
+        left: 35%;
+        top: 48%;
+        transform: translate(-10%, -50%);
+        z-index: 3;
+        max-height: 40%;
+    }
+
+    #icons #bocina {
+        border: none;
+        background-color: #FFF;        
+        width: 66px;
+        height: 40px;
+        margin-bottom: 5px;
+        font-size: 34px;
+        color: #FFF;
+        display: block;
+    }
+
+</style>
+
+<!-- Load d3.js -->
+<script src="d3.v4.js"></script>
+<!-- <script src="d3.js"></script> -->
+<!-- Create a div where the graph will take place -->
+<div id="container" class="cajas">
+    <div id="fondo" class="cajas1"></div>
+
+    <div class="chartGroup" style="margin-top: -5px; margin-left: 3px;">
+        <div id="totalChart" class="detailChart">
+            <svg class="chart" id="chart1"></svg>
+           
+        </div>
+
+        <div id="my_dataviz" class="cajas" style="margin-right: 90px;"></div>
+
+        <div id="my_dataviz2" class="cajas"></div>
+        <div id="totalChartBottomLeft" class="detailChart">
+            <svg class="chart" id="chart2"></svg>
+           
+        </div>
+    </div>
+
+    <div class="chartGroup" style="margin-left:3px; margin-top:45px">
+        <div id="totalChartBottomRight" class="detailChart">
+            <svg class="chart" id="chart3"></svg>
+        </div>
+        <div id="my_dataviz3" class="cajas" style="margin-right: 20px"></div>
+        <div id="legend" style="margin-right: 20px"></div>
+
+        <div id="my_dataviz4"></div>
+        <div id="totalChartTopLeft" class="detailChart">
+            <svg class="chart" id="chart4"></svg>
+            <iframe id="frame" src="dispersion.html" frameBorder="0" scrolling="no" style="display: none;" height="100%" width="100%"></iframe>
+        </div>
+    </div>
+    <div id="icons">
+        <button id="bocina"><i class="fa fa-volume-high"></i></button>
+    </div>
+    <!-- <div id="barChart" class="cajas"></div>  -->
+    <div id="buttons">
+        <!-- <button><img src="up.png" /></button>
+        <button><img src="down.png" /></button>
+        <button><img src="peak.png" /></button>
+        <button><img src="reset.png" /></button> -->
+        
+        <button id="altos"><i class="fa fa-arrow-up"></i></button>
+        <button id="bajos"><i class="fa fa-arrow-down"></i></button>
+        <select id="seldist" name="ditancias" >
+            <option value="10">10</option>
+            <option value="9">9</option>
+            <option value="8">8</option>
+            <option value="7">7</option>
+            <option value="6">6</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+        </select>
+        <button id="picos"><i class="fab fa-think-peaks" style="font-weight: bold;"></i></button>
+        <button id="normal"><i class="fa fa-chess-board" ></i></button>
+        <button id="scatterplot"><i class="fa fa-chart-bar"></i></button>
+        
+    </div>
+    
+</div>
+
+<!-- Load color palettes -->
+<script src="d3-scale-chromatic.v1.min.js"></script>
+<!-- <script src="d3.scale.js"></script> -->
+<script src="public/jquery-3.4.1.slim.min.js"></script>
+<script src="script.js?v=18"></script>
+</html>
